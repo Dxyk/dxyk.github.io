@@ -12,7 +12,7 @@ site_theme               : "default"
 title                    : "Xiangyu Kong"
 title_separator          : "-"
 name                     : &name "Xiangyu Kong"
-description              : &description "A PhD student in Computer Graphics"
+description              : &description "A PhD candidate in Computer Graphics at McGill University, Ubisoft Montreal, and Mila Quebec"
 url                      : "https://dxyk.github.io" # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io" or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "dxyk/dxyk.github.io"
@@ -25,9 +25,12 @@ author:
   avatar           : "profile.png"
   name             : "Xiangyu Kong"
   pronouns         : "he/him"
-  bio              : "A PhD student studying in Computer Graphics"
+  bio              : "A PhD candidate in Computer Graphics at McGill University, Ubisoft Montreal, and Mila Quebec"
   location         : "Toronto / Montreal, Canada"
-  employer         : "McGill University; Ubisoft Montreal; Mila Quebec"
+  employer         :
+    - "McGill University"
+    - "Ubisoft Montreal"
+    - "Mila Quebec"
   uri              : "https://dxyk.github.io"
   email            : "danielkong1997@gmail.com"
 
@@ -297,7 +300,7 @@ sass:
 permalink: /:categories/:title/
 # paginate: 5 # amount of posts to show
 # paginate_path: /page:num/
-timezone: Etc/UTC # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: America/Toronto # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins

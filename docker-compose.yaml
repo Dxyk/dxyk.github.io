@@ -2,7 +2,22 @@ services:
   jekyll-site:
     image: jekyll-site
     build: .
-    volumes: [ .:/usr/src/app ]
-    ports: [ 4000:4000 ]
-    user: 1000:1000
-    command: jekyll serve -H 0.0.0.0 -w
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    environment:
+      JEKYLL_ENV: development
+      JEKYLL_FORCE_POLLING: "1"
+    ports:
+      - "4000:4000"
+      - "35729:35729"  # For LiveReload
+    command: >
+      sh -c "bundle exec jekyll serve
+      -H 0.0.0.0
+      -P 4000
+      --livereload
+      --livereload-port 35729
+      --incremental
+      -w
+      --config _config.yml,_config_dev.yml
+      $${JEKYLL_DRAFTS:+--drafts} 2>&1 | tee /tmp/jekyll.log"

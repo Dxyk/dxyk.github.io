@@ -2,14 +2,21 @@
     "name": "ACADEMIC PAGES",
     "dockerComposeFile": "../docker-compose.yaml",
     "service": "jekyll-site",
-    "remoteEnv": {
-        "VSCODE_SERVER_DIR": "/home/vscode/.vscode-server"
-    },
-    "runArgs": [
-        "--user",
-        "1000:1000"
-    ],
     "workspaceFolder": "/usr/src/app",
     "remoteUser": "vscode",
-    "forwardPorts": [4000] // Add port forwarding
+    "overrideCommand": false,
+    "forwardPorts": [4000, 35729], // Add port forwarding
+    "containerEnv": {
+        "JEKYLL_DRAFTS": "1"
+    },
+    "postAttachCommand": "bash -lc 'tail -f /tmp/jekyll.log || true'",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "shopify.ruby-lsp",
+                "streetsidesoftware.code-spell-checker",
+                "EditorConfig.EditorConfig"
+            ]
+        }
+    }
 }
