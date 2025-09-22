@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Jekyll Serve Local",
+      "type": "shell",
+      "command": "bundle exec jekyll serve --host localhost --port 4000 --livereload --livereload-port 35729 --watch --force_polling --drafts --config _config.yml,_config_dev.yml",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}

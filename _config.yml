@@ -26,7 +26,7 @@ author:
   name             : "Xiangyu Kong"
   pronouns         : "he/him"
   bio              : "A PhD candidate in Computer Graphics at McGill University, Ubisoft Montreal, and Mila Quebec"
-  location         : "Toronto / Montreal, Canada"
+  location         : "Toronto / Montreal"
   employer         :
     - "McGill University"
     - "Ubisoft Montreal"
@@ -84,10 +84,14 @@ author:
 publication_category:
   # books:
   #   title: 'Books'
-  manuscripts:
-    title: 'Journal Articles'
   conferences:
     title: 'Conference Papers'
+  journal:
+    title: 'Journal Articles'
+  manuscripts:
+    title: 'Manuscripts'
+  posters:
+    title: 'Posters'
 
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
@@ -123,7 +127,7 @@ staticman:
       options:
         format           : "iso8601" # "iso8601" (default), "timestamp-seconds", "timestamp-milliseconds"
 atom_feed:
-  hide                   : false     # change to true to hide the RSS feed in the footer
+  hide                   : true     # change to true to hide the RSS feed in the footer
   path                   : # blank (default) uses feed.xml
 
 
@@ -243,8 +247,8 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: true
-      share: true
+      comments: false
+      share: false
       related: true
   # _pages
   - scope:
@@ -260,8 +264,8 @@ defaults:
     values:
       layout: single
       author_profile: true
-      share: true
-      comments: true
+      share: false
+      comments: false
   # _publications
   - scope:
       path: ""
@@ -269,8 +273,8 @@ defaults:
     values:
       layout: single
       author_profile: true
-      share: true
-      comments: true
+      share: false
+      comments: false
   # _portfolio
   - scope:
       path: ""
@@ -278,8 +282,8 @@ defaults:
     values:
       layout: single
       author_profile: true
-      share: true
-      comment: true
+      share: false
+      comment: false
   # _talks
   - scope:
       path: ""
@@ -287,7 +291,7 @@ defaults:
     values:
       layout: talk
       author_profile: true
-      share: true
+      share: false
 
 
 # Sass/SCSS
