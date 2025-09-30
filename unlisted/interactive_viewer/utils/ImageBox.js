@@ -236,21 +236,53 @@ window.wheelzoom = (function () {
 }());
 
 
+function createCollapsibleHelp() {
+    const helpContainer = document.createElement('div');
+    helpContainer.className = "help-collapsible";
+
+    const helpHeader = document.createElement('div');
+    helpHeader.className = "help-header";
+    helpHeader.innerHTML = "&#9654; help";
+
+    const helpContent = document.createElement('div');
+    helpContent.className = "help-content";
+    helpContent.style.display = "none";
+    helpContent.innerHTML =
+        "Use mouse wheel to zoom in/out, click and drag to pan.<br>" +
+        "Press keys [1], [2], ... to select individual images.<br>" +
+        "Press [<] and [>] to switch to the previous/next image, if available.<br>" +
+        "Press [R] to reset the view to the first image.<br>" +
+        "Press [M] and [Shift+M] to cycle through metrics, if available.<br>" +
+        "Press [Q] and [Shift+Q] to cycle through quality levels, if available.<br>";
+
+    helpHeader.addEventListener('click', function () {
+        if (helpContent.style.display === "none") {
+            helpContent.style.display = "block";
+            helpHeader.innerHTML = "&#9660; help"; // ▼
+        } else {
+            helpContent.style.display = "none";
+            helpHeader.innerHTML = "&#9654; help"; // ▶
+        }
+    });
+
+    helpContainer.appendChild(helpHeader);
+    helpContainer.appendChild(helpContent);
+    return helpContainer;
+}
+
 const ImageBox = function (parent, config) {
     const self = this;
 
     const box = document.createElement('div');
     box.className = "image-box";
 
-    // var h1 = document.createElement('h1');
+    // const h1 = document.createElement('h1');
     // h1.className = "title";
     // h1.appendChild(document.createTextNode("Images"));
     // box.appendChild(h1);
 
-    // var help = document.createElement('div');
-    // help.appendChild(document.createTextNode("Use mouse wheel to zoom in/out, click and drag to pan. Press keys [1], [2], ... to switch between individual images."));
-    // help.className = "help";
-    // box.appendChild(help);
+    // Add collapsible help section
+    box.appendChild(createCollapsibleHelp());
 
     this.tree = [];
     this.selection = [];
@@ -425,16 +457,94 @@ ImageBox.prototype.showContent = function (level, idx) {
     }
 }
 
+ImageBox.prototype.getCurrentNode = function(level) {
+    let node = { children: this.tree };
+    for (let i = 0; i < level; i++) {
+        node = node.children[this.selection[i]];
+    }
+    return node;
+};
+
 ImageBox.prototype.keyPressHandler = function (event) {
-    // 1..9 select 1..9, 0 selects 10th, R selects 11th (as per your code)
+    // Images, Final level
     if (event.key >= '1' && event.key <= '9') {
         this.showContent(this.selection.length - 1, Number(event.key) - 1);
     } else if (event.key === '0') {
-        this.showContent(this.selection.length - 1, 9);
+        this.showContent(this.selection.length - 1, 0);
     } else if (event.key.toLowerCase() === 'r') {
-        this.showContent(this.selection.length - 1, 10);
+        // Reference, Assume first element
+        this.showContent(this.selection.length - 1, 0);
+    } else if (event.key === ',') {
+        // Previous image (assume last level)
+        const currentLevel = this.selection.length - 1;
+        const currentNode = this.getCurrentNode(currentLevel);
+        this.showContent(
+            currentLevel,
+            (this.selection[currentLevel] - 1 + currentNode.children.length) % currentNode.children.length
+        );
+    } else if (event.key === '.') {
+        // Next image (assume last level)
+        const currentLevel = this.selection.length - 1;
+        const currentNode = this.getCurrentNode(currentLevel);
+        this.showContent(
+            currentLevel,
+            (this.selection[currentLevel] + 1) % currentNode.children.length
+        );
+
+    // Metrics, Second last level
+    } else if (event.key === 'm') {
+        if (this.selection.length >= 2) {
+            // Cycle through metrics (assume second last level)
+            const metricLevel = this.selection.length - 2;
+            const currentNode = this.getCurrentNode(metricLevel);
+            this.showContent(
+                metricLevel,
+                (this.selection[metricLevel] + 1) % currentNode.children.length
+            );
+        }
+    } else if (event.key === 'M') {
+        if (this.selection.length >= 2) {
+            // Reverse cycle through metrics (assume second last level)
+            const metricLevel = this.selection.length - 2;
+            const currentNode = this.getCurrentNode(metricLevel);
+            this.showContent(
+                metricLevel,
+                (this.selection[metricLevel] - 1 + currentNode.children.length) % currentNode.children.length
+            );
+        }
+    } else if (event.key.toLowerCase() === 'n') {
+       // Jump to Negative SMAPE
+       if (this.selection.length >= 2) {
+            // Reverse cycle through metrics (assume second last level)
+            const metricLevel = this.selection.length - 2;
+            const currentNode = this.getCurrentNode(metricLevel);
+            this.showContent(
+                metricLevel,
+                currentNode.children.length - 1 // last child is always Negative SMAPE
+            );
+        }
+
+    // Quality, Top level
     } else if (event.key === 'q') {
-        // cycle through quality
+        // Quality (assume top level)
+        if (this.selection.length >= 1) {
+            const qualityLevel = 0;
+            const currentNode = this.getCurrentNode(qualityLevel);
+            this.showContent(
+                qualityLevel,
+                (this.selection[qualityLevel] + 1) % currentNode.children.length
+            );
+        }
+    } else if (event.key === 'Q') {
+        // Reverse quality (assume top level)
+        if (this.selection.length >= 1) {
+            const qualityLevel = 0;
+            const currentNode = this.getCurrentNode(qualityLevel);
+            this.showContent(
+                qualityLevel,
+                (this.selection[qualityLevel] - 1 + currentNode.children.length) % currentNode.children.length
+            );
+        }
     }
 }
 
