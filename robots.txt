@@ -1,2 +1,3 @@
 User-agent: *
-Disallow: /unlisted/**
+Disallow: /unlisted/
+Sitemap: https://dxyk.github.io/sitemap.xml
