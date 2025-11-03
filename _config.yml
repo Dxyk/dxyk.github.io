@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://www.schemastore.org/schemas/json/jekyll.json
+
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your entire site, values
@@ -37,7 +39,7 @@ author:
   # Academic websites
   academia         : # URL
   arxiv            : # URL - Update with the correct link to your profile
-  googlescholar    : # "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
+  googlescholar    : "https://scholar.google.ca/citations?user=j2Iyi74AAAAJ"
   impactstory      : # URL
   orcid            : "https://orcid.org/0000-0001-9399-8356"
   semantic         : # URL
@@ -157,9 +159,9 @@ social:
 
 # Analytics
 analytics:
-  provider               :  "false" # false (default), "google", "google-universal", "google-analytics-4", "custom"
+  provider               :  "google-analytics-4" # false (default), "google", "google-universal", "google-analytics-4", "custom"
   google:
-    tracking_id          :
+    tracking_id          : "G-JT89S51R0R"
 
 
 # Reading Files
