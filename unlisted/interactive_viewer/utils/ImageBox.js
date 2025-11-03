@@ -253,6 +253,8 @@ function createCollapsibleHelp() {
         "Press [<] and [>] to switch to the previous/next image, if available.<br>" +
         "Press [R] to reset the view to the first image.<br>" +
         "Press [M] and [Shift+M] to cycle through metrics, if available.<br>" +
+        "Press [F] and [Shift+F] to cycle through frames, if available.<br>" +
+        "Press [C] and [Shift+C] to cycle through clips, if available.<br>" +
         "Press [Q] and [Shift+Q] to cycle through quality levels, if available.<br>";
 
     helpHeader.addEventListener('click', function () {
@@ -466,7 +468,7 @@ ImageBox.prototype.getCurrentNode = function(level) {
 };
 
 ImageBox.prototype.keyPressHandler = function (event) {
-    // Images, Final level
+    // Images, Final level (Level 5)
     if (event.key >= '1' && event.key <= '9') {
         this.showContent(this.selection.length - 1, Number(event.key) - 1);
     } else if (event.key === '0') {
@@ -491,7 +493,7 @@ ImageBox.prototype.keyPressHandler = function (event) {
             (this.selection[currentLevel] + 1) % currentNode.children.length
         );
 
-    // Metrics, Second last level
+    // Metrics, Level 4 (second last level)
     } else if (event.key === 'm') {
         if (this.selection.length >= 2) {
             // Cycle through metrics (assume second last level)
@@ -524,11 +526,55 @@ ImageBox.prototype.keyPressHandler = function (event) {
             );
         }
 
-    // Quality, Top level
+    // Frame, Level 3 (third last level)
+    } else if (event.key === 'f') {
+        if (this.selection.length >= 3) {
+            // Cycle through frames
+            const frameLevel = this.selection.length - 3;
+            const currentNode = this.getCurrentNode(frameLevel);
+            this.showContent(
+                frameLevel,
+                (this.selection[frameLevel] + 1) % currentNode.children.length
+            );
+        }
+    } else if (event.key === 'F') {
+        if (this.selection.length >= 3) {
+            // Reverse cycle through frames
+            const frameLevel = this.selection.length - 3;
+            const currentNode = this.getCurrentNode(frameLevel);
+            this.showContent(
+                frameLevel,
+                (this.selection[frameLevel] - 1 + currentNode.children.length) % currentNode.children.length
+            );
+        }
+
+    // Clip, Level 2 (fourth last level)
+    } else if (event.key === 'c') {
+        if (this.selection.length >= 4) {
+            // Cycle through clips
+            const clipLevel = this.selection.length - 4;
+            const currentNode = this.getCurrentNode(clipLevel);
+            this.showContent(
+                clipLevel,
+                (this.selection[clipLevel] + 1) % currentNode.children.length
+            );
+        }
+    } else if (event.key === 'C') {
+        if (this.selection.length >= 4) {
+            // Reverse cycle through clips
+            const clipLevel = this.selection.length - 4;
+            const currentNode = this.getCurrentNode(clipLevel);
+            this.showContent(
+                clipLevel,
+                (this.selection[clipLevel] - 1 + currentNode.children.length) % currentNode.children.length
+            );
+        }
+
+    // Quality, Level 1 (top level)
     } else if (event.key === 'q') {
         // Quality (assume top level)
         if (this.selection.length >= 1) {
-            const qualityLevel = 0;
+            const qualityLevel = this.selection.length - 5;
             const currentNode = this.getCurrentNode(qualityLevel);
             this.showContent(
                 qualityLevel,
@@ -538,7 +584,7 @@ ImageBox.prototype.keyPressHandler = function (event) {
     } else if (event.key === 'Q') {
         // Reverse quality (assume top level)
         if (this.selection.length >= 1) {
-            const qualityLevel = 0;
+            const qualityLevel = this.selection.length - 5;
             const currentNode = this.getCurrentNode(qualityLevel);
             this.showContent(
                 qualityLevel,

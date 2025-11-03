@@ -5,6 +5,6 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
-        "unlisted/interactive_viewer/*": true,
+        // "unlisted/interactive_viewer/*": true,
     }
 }
