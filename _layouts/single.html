@@ -33,14 +33,78 @@ layout: default
         {% if page.modified %}
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time></p>
         {% endif %}
-        
+
+        <!-- Add authors -->
+        {% if page.authors %}
+          <div class="page__authors">
+            <p class="page__meta"><strong><i class="fa fa-fw fa-users" aria-hidden="true"></i> Authors:</strong></p>
+            <div class="authors-list">
+              <!-- Create unique affiliations list -->
+              {% assign all_affiliations = '' | split: ',' %}
+              {% for author in page.authors %}
+                {% if author.affiliations %}
+                  {% for affiliation in author.affiliations %}
+                    {% assign all_affiliations = all_affiliations | push: affiliation %}
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+              {% assign unique_affiliations = all_affiliations | uniq %}
+
+              <!-- Display authors on one line -->
+              <p style="margin-bottom: 0.5em;">
+                {% for author in page.authors %}
+                  {% if author.link %}
+                    <a href="{{ author.link }}" target="_blank" rel="noopener">
+                      <strong>{{ author.name }}</strong>
+                    </a>
+                  {% else %}
+                    <strong>{{ author.name }}</strong>
+                  {% endif %}
+                  {% if author.is_primary %}<sup>*</sup>{% endif %}
+                  <!-- Handle author affiliations -->
+                  {% assign author_affiliations = author.affiliations | default: author.affiliation %}
+                  {% if author_affiliations %}
+                    <sup>
+                    {% for affiliation in author_affiliations %}
+                      {% for unique_affiliation in unique_affiliations %}
+                        {% if affiliation == unique_affiliation %}
+                          {{ forloop.index }}
+                          {% break %}
+                        {% endif %}
+                      {% endfor %}
+                      {% unless forloop.last %},{% endunless %}
+                    {% endfor %}
+                    </sup>
+                  {% endif %}
+                  {% unless forloop.last %}, {% endunless %}
+                {% endfor %}
+              </p>
+
+              <!-- Display affiliations with superscript numbers -->
+              {% if unique_affiliations.size > 0 %}
+                <div style="font-size: 0.9em; color: #666; margin-top: 0.3em;">
+                  {% for affiliation in unique_affiliations %}
+                    <span style="margin-right: 2em;"><sup>{{ forloop.index }}</sup> {{ affiliation }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <!-- Primary author note -->
+              {% assign primary_authors = page.authors | where: "is_primary", true %}
+              {% if primary_authors.size > 0 %}
+                <p style="font-size: 0.8em; color: #666; margin-top: 0.5em;"><sup>*</sup> Primary author</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
         {% if page.collection == 'teaching' %}
           <p> {{ page.type }}, <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif page.venue and page.date %}
           <p>Published in <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif page.date %}
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
-        {% endif %}    
+        {% endif %}
         </header>
       {% endunless %}
 

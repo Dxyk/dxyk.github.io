@@ -39,6 +39,21 @@
       <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
     {% endif %}
 
+    <!-- Add authors for publications -->
+    {% if post.collection == 'publications' and post.authors %}
+      <p class="page__meta" style="margin-bottom: 0.3em;">
+        {% for author in post.authors %}
+          {% if author.link %}
+            <a href="{{ author.link }}" target="_blank" rel="noopener">{{ author.name }}</a>
+          {% else %}
+            {{ author.name }}
+          {% endif %}
+          {% if author.is_primary %}<sup>*</sup>{% endif %}
+          {% unless forloop.last %}, {% endunless %}
+        {% endfor %}
+      </p>
+    {% endif %}
+
         {% if post.collection == 'teaching' %}
           <p> {{ post.type }}, <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif post.collection == 'publications' %}

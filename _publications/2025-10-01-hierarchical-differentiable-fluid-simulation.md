@@ -12,6 +12,35 @@ bibtexurl: # 'http://academicpages.github.io/files/bibtex1.bib'
 citation: # 'Your Name, You. (2009). &quot;Paper Title Number 1.&quot; <i>Journal 1</i>. 1(1).'
 header:
   teaser: "/files/Hierarchical-Diff-Fluid/Teaser.png"
+image:
+  path: "/files/Hierarchical-Diff-Fluid/Teaser.png"
+  alt: "Fluid Controls Learned through Hierarchical Differentiable Fluid Simulation"
+authors:
+  - name: "Xiangyu (Daniel) Kong"
+    affiliations:
+      - "McGill University"
+      - "Mila"
+      - "Ubisoft"
+    link: "https://dxyk.github.io"
+    is_primary: true
+  - name: "Arnaud Schoentgen"
+    affiliations:
+      - "Ubisoft"
+    link: "https://arnaudschoentgen.github.io"
+  - name: "Damien Rioux-Lavoie"
+    affiliations:
+      - "Ubisoft"
+    link: "https://riouxld21.github.io/"
+  - name: "Paul G. Kry"
+    affiliations:
+      - "McGill University"
+    link: "https://www.cs.mcgill.ca/~kry/"
+  - name: "Derek Nowrouzezahrai"
+    affiliations:
+      - "McGill University"
+      - "Mila"
+      - "Canada CIFAR AI Chair"
+    link: "https://cim.mcgill.ca/~derek/"
 ---
 
 [📄 Download PDF]({{ page.paperurl }}){: .btn .btn-primary }
