@@ -16,7 +16,7 @@ image:
   path: "/files/Hierarchical-Diff-Fluid/Teaser.png"
   alt: "Fluid Controls Learned through Hierarchical Differentiable Fluid Simulation"
 authors:
-  - name: "Xiangyu (Daniel) Kong"
+  - name: "Xiangyu Kong"
     affiliations:
       - "McGill University"
       - "Mila"
